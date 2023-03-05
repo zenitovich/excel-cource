@@ -5,7 +5,7 @@
     text-align: center;
     position: relative;
     display: inline-block;
-    background: rgba(0, 0, 0, .7);
+    // background: rgba(0, 0, 0, .7);
 
     & > span {
         font-size: 18px;
@@ -18,4 +18,10 @@
         background: #eee;
         cursor: pointer;
     }
+}
+
+@mixin claer-list() {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
