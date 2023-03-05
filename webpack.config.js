@@ -4,24 +4,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
 
 const fileName = (ext) => (isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`);
-
-const jsLoaders = () => {
-  const loaders = [
-    {
-      loader: 'babel-loader',
-      options: { presets: ['@babel/preset-env'] },
-    },
-  ];
-  if (isDev) {
-    loaders.push('eslint-loader');
-  }
-  return loaders;
-};
 
 console.log('IS PROD', isProd);
 console.log('IS DEV', isDev);
@@ -49,6 +38,7 @@ module.exports = {
     hot: isDev,
   },
   plugins: [
+    new ESLintPlugin(),
     new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
       template: 'index.html',
@@ -79,7 +69,7 @@ module.exports = {
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
-        use: jsLoaders(),
+        use: ['babel-loader'],
       },
     ],
   },
