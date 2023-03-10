@@ -4,6 +4,13 @@ import { ExcelComponent } from '../../core/ExcelComponent';
 export class Toolbar extends ExcelComponent {
   static className = 'excel__toolbar';
 
+  constructor($root) {
+    super($root, {
+      name: 'Toolbar',
+      listeners: ['click'],
+    });
+  }
+
   // eslint-disable-next-line class-methods-use-this
   toHTML() {
     return `
@@ -20,5 +27,10 @@ export class Toolbar extends ExcelComponent {
 </div><div class="button">
     <span class="material-icons">format_underline</span>
 </div>`;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  onClick(event) {
+    console.log(event.target);
   }
 }

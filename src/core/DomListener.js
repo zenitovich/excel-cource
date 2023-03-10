@@ -22,8 +22,17 @@ export class DomListener {
       if (!this[method]) {
         throw new Error(`Method ${method} is not implemented in ${this.name || ''} Component`);
       }
+      this[method] = this[method].bind(this);
       // то же самое что и addEvenetListener
-      this.$root.on(listener, this[method].bind(this));
+      this.$root.on(listener, this[method]);
+    });
+  }
+
+  removeDOMListeners() {
+    this.listeners.forEach((listener) => {
+      const method = getMethodName(listener);
+      console.log('removeDOM', method);
+      this.$root.off(listener, this[method]);
     });
   }
 }

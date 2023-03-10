@@ -23,6 +23,10 @@ class Dom {
     this.$el.addEventListener(eventType, callback);
   }
 
+  off(eventType, callback) {
+    this.$el.removeEventListener(eventType, callback);
+  }
+
   // В методе аппенд ошибки быть не должно, если что то не получается, возврат сюда
   append(node) {
     if (node instanceof Dom) {

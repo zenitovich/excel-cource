@@ -28,6 +28,14 @@
 
     .row-data {
         display: flex;
+        //если что необходимо убрать
+        // justify-content: center;
+        // align-items: center;
+        // min-width: $info-cell-width;
+        // height: 100%;
+        // border: 1px solid $border-color;
+        // background: #f8f9fa;
+        // border-top: none;
     }
 
     .column {
