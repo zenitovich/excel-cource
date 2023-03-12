@@ -5,22 +5,26 @@ const CODES = {
   Z: 90,
 };
 
-function craeteCell() {
+function toCell() {
   return `
-    <div class="cell" contenteditable="">B2</div>`;
+    <div class="cell" contenteditable=""></div>`;
 }
 
-function createCol(col) {
+function toColumn(col) {
   return `
     <div class="column">${col}</div> `;
 }
 
-function createRow(content) {
+function createRow(index, content) {
   return `
     <div class="row">
-        <div class="row-info"></div>
+        <div class="row-info">${index || ''}</div>
         <div class="row-data">${content}</div>
     </div>`;
+}
+
+function toChar(_, index) {
+  return String.fromCharCode(CODES.A + index);
 }
 
 export default function createTable(rowsCount = 15) {
@@ -29,16 +33,20 @@ export default function createTable(rowsCount = 15) {
 
   const cols = new Array(colsCount)
     .fill('')
-    .map((el, index) => String.fromCharCode(CODES.A + index))
-    .map((el) => createCol(el))
+    .map(toChar)
+    .map(toColumn)
     .join('');
 
   console.log(cols);
 
-  rows.push(createRow(cols));
+  rows.push(createRow(null, cols));
 
   for (let i = 0; i < rowsCount; i++) {
-    rows.push(createRow());
+    const cells = new Array(colsCount)
+      .fill('')
+      .map(toCell)
+      .join('');
+    rows.push(createRow(i + 1, cells));
   }
 
   return rows.join('');

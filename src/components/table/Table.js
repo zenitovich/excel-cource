@@ -7,6 +7,6 @@ export class Table extends ExcelComponent {
 
   // eslint-disable-next-line class-methods-use-this
   toHTML() {
-    return createTable();
+    return createTable(20);
   }
 }
