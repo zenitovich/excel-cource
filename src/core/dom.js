@@ -40,6 +40,16 @@ class Dom {
     }
     return this;
   }
+
+  closest(selector) {
+    // eslint-disable-next-line no-use-before-define
+    return $(this.$el.closest(selector));
+  }
+
+  // Встроенный метод позволяющий получить набор координат
+  getCoords() {
+    return this.$el.getBoundingClientRect();
+  }
 }
 
 // eslint-disable-next-line import/prefer-default-export
