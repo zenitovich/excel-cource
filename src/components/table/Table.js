@@ -18,17 +18,37 @@ export class Table extends ExcelComponent {
     return createTable(20);
   }
 
-  // какая то ошибка потом решу еще смотри файл дом джс
   onMousedown(event) {
     if (event.target.dataset.resize) {
       const $resizer = $(event.target);
       // closest ищет ближайшего родителя по параметрам
       const $parent = $resizer.closest('[data-type="resizable"]');
       const coords = $parent.getCoords();
-      console.log(coords);
+      const type = $resizer.data.resize;
+      const cells = this.$root.findAll(`[data-col="${$parent.data.col}"]`);
+
       document.onmousemove = (e) => {
-        const delta = Math.floor(e.pageX - coords.right);
-        console.log(delta);
+        $resizer.$el.style.opacity = 1;
+        if (type === 'col') {
+          const delta = e.pageX - coords.right;
+          const value = coords.width + delta;
+          $parent.css({
+            width: `${value}px`,
+          });
+          // eslint-disable-next-line no-return-assign, no-param-reassign
+          cells.forEach((el) => el.style.width = `${value}px`);
+        } else if (type === 'row') {
+          const delta = e.pageY - coords.bottom;
+          const value = coords.height + delta;
+          $parent.css({
+            height: `${value}px`,
+          });
+        }
+      };
+
+      document.onmouseup = () => {
+        document.onmousemove = null;
+        $resizer.$el.style.opacity = 0;
       };
     }
   }
