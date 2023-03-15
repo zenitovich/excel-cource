@@ -40,6 +40,33 @@ class Dom {
     }
     return this;
   }
+
+  get data() {
+    return this.$el.dataset;
+  }
+
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector);
+  }
+
+  // метод кейс перебирает все ключи в объекте и создает массив
+  css(styles = {}) {
+    Object.keys(styles)
+      .forEach((key) => {
+      // eslint-disable-next-line no-unused-expressions
+        this.$el.style[key] = styles[key];
+      });
+  }
+
+  closest(selector) {
+    // eslint-disable-next-line no-use-before-define
+    return $(this.$el.closest(selector));
+  }
+
+  // Встроенный метод позволяющий получить набор координат
+  getCoords() {
+    return this.$el.getBoundingClientRect();
+  }
 }
 
 // eslint-disable-next-line import/prefer-default-export
