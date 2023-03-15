@@ -45,6 +45,11 @@ class Dom {
     return this.$el.dataset;
   }
 
+  find(selector) {
+    // eslint-disable-next-line no-use-before-define
+    return $(this.$el.querySelector(selector));
+  }
+
   findAll(selector) {
     return this.$el.querySelectorAll(selector);
   }
