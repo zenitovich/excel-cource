@@ -6,7 +6,12 @@ export class ExcelComponent extends DomListener {
   constructor($root, options = {}) {
     super($root, options.listeners);
     this.name = options.name || '';
+
+    this.prepare();
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  prepare() {}
 
   // eslint-disable-next-line class-methods-use-this
   toHTML() {

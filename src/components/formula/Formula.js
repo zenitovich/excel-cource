@@ -18,10 +18,8 @@ export class Formula extends ExcelComponent {
     <div class="input" contenteditable="" spellcheck="false"></div>`;
   }
 
-  // Почему то тут тоже пишет ошибку хотя ее не должно быть
   // eslint-disable-next-line class-methods-use-this
   onInput(event) {
-    console.log(this.$root);
     console.log('Formula: onInput', event.target.textContent.trim());
   }
 }
