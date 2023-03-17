@@ -2,10 +2,11 @@
 import { ExcelComponent } from '../../core/ExcelComponent';
 import createTable from './table.template';
 import resizeHandler from './table.resize';
-import { shouldResize, isCell } from './table.functions';
+import {
+  shouldResize, isCell, matrix, nextSelector,
+} from './table.functions';
 import TableSelection from './TableSelection';
 import { $ } from '../../core/dom';
-import { range } from '../../core/utils';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Table extends ExcelComponent {
@@ -13,7 +14,7 @@ export class Table extends ExcelComponent {
 
   constructor($root) {
     super($root, {
-      listeners: ['mousedown'],
+      listeners: ['mousedown', 'keydown'],
     });
   }
 
@@ -40,26 +41,25 @@ export class Table extends ExcelComponent {
     } else if (isCell(event)) {
       const $target = $(event.target);
       if (event.shiftKey === true) {
-        const target = $target.id(true);
-        const current = this.selection.current.id(true);
-
-        // eslint-disable-next-line no-unused-vars, no-use-before-define
-        const cols = range(current.col, target.col);
-        // eslint-disable-next-line no-use-before-define
-        const rows = range(current.row, target.row);
-        console.log('Cols', cols);
-        console.log('rows', rows);
-
-        const ids = cols.reduce((acc, col) => {
-          rows.forEach((row) => acc.push(`${row}:${col}`));
-          return acc;
-        }, []);
-
-        const $cells = ids.map((id) => this.$root.find(`[data-id="${id}"]`));
+        const $cells = matrix($target, this.selection.current)
+          .map((id) => this.$root.find(`[data-id="${id}"]`));
         this.selection.selectGroup($cells);
       } else {
         this.selection.select($target);
       }
+    }
+  }
+
+  onKeydown(event) {
+    const keys = ['Enter', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp'];
+    const { key } = event;
+    if (keys.includes(key) && !event.shiftKey) {
+      // отменяем поведение по умолчанию
+      event.preventDefault();
+      const id = this.selection.current.id(true);
+      // eslint-disable-next-line no-undef, no-use-before-define
+      const $next = this.$root.find(nextSelector(key, id));
+      this.selection.select($next);
     }
   }
 }
