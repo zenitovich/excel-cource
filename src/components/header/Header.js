@@ -2,6 +2,13 @@ import { ExcelComponent } from '../../core/ExcelComponent';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Header extends ExcelComponent {
+  constructor($root, options) {
+    super($root, {
+      name: 'Header',
+      ...options,
+    });
+  }
+
   static className = 'excel__header';
 
   // eslint-disable-next-line class-methods-use-this

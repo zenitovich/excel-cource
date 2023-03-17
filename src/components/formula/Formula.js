@@ -2,10 +2,11 @@ import { ExcelComponent } from '../../core/ExcelComponent';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Formula extends ExcelComponent {
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
       name: 'Formula',
       listeners: ['input'],
+      ...options,
     });
   }
 
@@ -20,6 +21,7 @@ export class Formula extends ExcelComponent {
 
   // eslint-disable-next-line class-methods-use-this
   onInput(event) {
-    console.log('Formula: onInput', event.target.textContent.trim());
+    const text = event.target.textContent.trim();
+    this.emitter.emit('it is working', text);
   }
 }
