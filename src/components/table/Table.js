@@ -15,7 +15,7 @@ export class Table extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'keydown'],
+      listeners: ['mousedown', 'keydown', 'input'],
       ...options,
     });
   }
@@ -34,11 +34,20 @@ export class Table extends ExcelComponent {
   init() {
     super.init();
     const $cell = this.$root.find('[data-id="0:0"]');
-    this.selection.select($cell);
+    this.selectCell($cell);
 
-    this.emitter.subscribe('it is working', (text) => {
+    this.$on('formula:input', (text) => {
       this.selection.current.text(text);
     });
+
+    this.$on('formula: done', () => {
+      this.selection.current.focus();
+    });
+  }
+
+  selectCell($cell) {
+    this.selection.select($cell);
+    this.$emit('table:select', $cell);
   }
 
   onMousedown(event) {
@@ -60,12 +69,15 @@ export class Table extends ExcelComponent {
     const keys = ['Enter', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp'];
     const { key } = event;
     if (keys.includes(key) && !event.shiftKey) {
-      // отменяем поведение по умолчанию
       event.preventDefault();
       const id = this.selection.current.id(true);
       // eslint-disable-next-line no-undef, no-use-before-define
       const $next = this.$root.find(nextSelector(key, id));
-      this.selection.select($next);
+      this.selectCell($next);
     }
+  }
+
+  onInput(event) {
+    this.$emit('table:input', $(event.target));
   }
 }
