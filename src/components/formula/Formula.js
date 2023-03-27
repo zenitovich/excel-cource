@@ -31,11 +31,20 @@ export class Formula extends ExcelComponent {
     this.$on('table:input', ($cell) => {
       this.$formula.text($cell.text());
     });
+
+    this.$subscribe((state) => console.log('FormulaState', state));
   }
 
   // eslint-disable-next-line class-methods-use-this
   onInput(event) {
-    this.$emit('formula:input', $(event.target).text());
+    const text = $(event.target).text();
+    this.$emit('formula:input', text);
+
+    // this.$dispatch({
+    //   data: {
+    //     tableTitle: text,
+    //   },
+    // });
   }
 
   // eslint-disable-next-line class-methods-use-this

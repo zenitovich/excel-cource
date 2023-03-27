@@ -11,6 +11,17 @@ export class Header extends ExcelComponent {
 
   static className = 'excel__header';
 
+  // init() {
+  //   const initState = this.store.getState();
+  //   this.changeTitle(initState.tableTitle);
+  //   this.$subscribe((state) => this.changeTitle(state.tableTitle));
+  // }
+
+  // changeTitle(title) {
+  //   const input = this.$root.find('input');
+  //   input.$el.setAttribute('value', title);
+  // }
+
   // eslint-disable-next-line class-methods-use-this
   toHTML() {
     return `
