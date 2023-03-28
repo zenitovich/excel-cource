@@ -7,6 +7,8 @@ import {
 } from './table.functions';
 import TableSelection from './TableSelection';
 import { $ } from '../../core/dom';
+// импортирует все из файла как переменную actions чтобы можно было объеденить все исходники
+import * as actions from '../../redux/actions';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Table extends ExcelComponent {
@@ -22,7 +24,7 @@ export class Table extends ExcelComponent {
 
   // eslint-disable-next-line class-methods-use-this
   toHTML() {
-    return createTable(20);
+    return createTable(20, this.store.getState());
   }
 
   // вспомогательный метод, вызывающийся пред инит
@@ -44,7 +46,7 @@ export class Table extends ExcelComponent {
       this.selection.current.focus();
     });
 
-    this.$subscribe((state) => console.log('TableState', state));
+    // this.$subscribe((state) => console.log('TableState', state));
   }
 
   selectCell($cell) {
@@ -55,8 +57,7 @@ export class Table extends ExcelComponent {
   async resizeTable(event) {
     try {
       const data = await resizeHandler(this.$root, event);
-      this.$dispatch({ type: 'TABLE_RESIZE', data });
-      console.log('resize data', data);
+      this.$dispatch(actions.tableResize(data));
     } catch (e) {
       console.warn('resize error', e.message);
     }
