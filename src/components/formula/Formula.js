@@ -7,6 +7,7 @@ export class Formula extends ExcelComponent {
     super($root, {
       name: 'Formula',
       listeners: ['input', 'keydown'],
+      subscribe: ['currentText'],
       ...options,
     });
   }
@@ -28,11 +29,19 @@ export class Formula extends ExcelComponent {
       this.$formula.text($cell.text());
     });
 
-    this.$on('table:input', ($cell) => {
-      this.$formula.text($cell.text());
-    });
+    // this.$on('table:input', ($cell) => {
+    //   this.$formula.text($cell.text());
+    // });
 
-    // this.$subscribe((state) => console.log('FormulaState', state));
+    // this.$subscribe((state) => {
+    //   console.log('Formula updt', state.currentText);
+    //   this.$formula.text(state.currentText);
+    // });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  storeChanged({ currentText }) {
+    this.$formula.text(currentText);
   }
 
   // eslint-disable-next-line class-methods-use-this

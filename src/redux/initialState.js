@@ -3,6 +3,8 @@ import { storage } from '../core/utils';
 const deafultState = {
   rowState: {},
   colState: {},
+  dataState: {},
+  currentText: '',
 };
 
 // eslint-disable-next-line import/prefer-default-export

@@ -1,4 +1,5 @@
 import { Emitter } from '../../core/Emitter';
+import StoreSubscriber from '../../core/StoreSubscriber';
 import { $ } from '../../core/dom';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -8,6 +9,7 @@ export class Excel {
     this.components = options.components || [];
     this.store = options.store;
     this.emitter = new Emitter();
+    this.subscriber = new StoreSubscriber(this.store);
   }
 
   getRoot() {
@@ -36,10 +38,12 @@ export class Excel {
   // render говорит нам о том, что мы что то складываем в шаблон
   render() {
     this.$el.append(this.getRoot());
+    this.subscriber.sunscribeComponents(this.components);
     this.components.forEach((component) => component.init());
   }
 
   destroy() {
+    this.subscriber.unsubscribeFromStore();
     this.components.forEach((component) => component.destroy);
   }
 }

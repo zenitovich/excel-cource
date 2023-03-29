@@ -7,9 +7,10 @@ export class ExcelComponent extends DomListener {
     super($root, options.listeners);
     this.name = options.name || '';
     this.emitter = options.emitter;
+    this.subscribe = options.subscribe || [];
     this.store = options.store;
     this.unsubscribers = [];
-    this.storeSub = null;
+    // this.storeSub = null;
 
     this.prepare();
   }
@@ -38,9 +39,19 @@ export class ExcelComponent extends DomListener {
     this.store.dispatch(action);
   }
 
-  $subscribe(fn) {
-    this.storeSub = this.store.subscribe(fn);
+  // Приходят только изменения по тем полям, на которые мы подписались
+  // eslint-disable-next-line class-methods-use-this
+  storeChanged() {
+
   }
+
+  isWatching(key) {
+    return this.subscribe.includes(key);
+  }
+
+  // $subscribe(fn) {
+  //   this.storeSub = this.store.subscribe(fn);
+  // }
 
   // Инициализиурем компонент, добавляем DOM слушателей
   init() {
@@ -51,6 +62,6 @@ export class ExcelComponent extends DomListener {
   destroy() {
     this.removeDOMListeners();
     this.unsubscribers.forEach((unsub) => unsub());
-    this.storeSub.unsubscribe();
+    // this.storeSub.unsubscribe();
   }
 }
