@@ -1,6 +1,6 @@
 import { Emitter } from '../../core/Emitter';
 import StoreSubscriber from '../../core/StoreSubscriber';
-import { $ } from '../../core/dom';
+import $ from '../../core/dom';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Excel {

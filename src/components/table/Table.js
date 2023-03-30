@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
-import { ExcelComponent } from '../../core/ExcelComponent';
+import ExcelComponent from '../../core/ExcelComponent';
 import createTable from './table.template';
 import resizeHandler from './table.resize';
 import {
   shouldResize, isCell, matrix, nextSelector,
 } from './table.functions';
 import TableSelection from './TableSelection';
-import { $ } from '../../core/dom';
+import $ from '../../core/dom';
 // импортирует все из файла как переменную actions чтобы можно было объеденить все исходники
 import * as actions from '../../redux/actions';
 

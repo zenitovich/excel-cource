@@ -1,4 +1,4 @@
-import { ExcelComponent } from '../../core/ExcelComponent';
+import ExcelComponent from '../../core/ExcelComponent';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Header extends ExcelComponent {

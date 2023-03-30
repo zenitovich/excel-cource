@@ -110,8 +110,7 @@ class Dom {
   }
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export function $(selector) {
+export default function $(selector) {
   return new Dom(selector);
 }
 

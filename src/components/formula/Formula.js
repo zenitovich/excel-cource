@@ -1,5 +1,5 @@
-import { ExcelComponent } from '../../core/ExcelComponent';
-import { $ } from '../../core/dom';
+import ExcelComponent from '../../core/ExcelComponent';
+import $ from '../../core/dom';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Formula extends ExcelComponent {
