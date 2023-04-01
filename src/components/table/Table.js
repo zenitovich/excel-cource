@@ -9,6 +9,7 @@ import TableSelection from './TableSelection';
 import $ from '../../core/dom';
 // импортирует все из файла как переменную actions чтобы можно было объеденить все исходники
 import * as actions from '../../redux/actions';
+import { defaultStyles } from '../../constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Table extends ExcelComponent {
@@ -46,11 +47,19 @@ export class Table extends ExcelComponent {
     this.$on('formula: done', () => {
       this.selection.current.focus();
     });
+
+    this.$on('toolbar:applyStyle', (style) => {
+      console.log('style', style);
+      this.selection.applyStyle(style);
+    });
   }
 
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
+    const styles = $cell.getStyles(Object.keys(defaultStyles));
+    console.log('styles to dispatch', styles);
+    this.$dispatch(actions.changeStyles(styles));
   }
 
   async resizeTable(event) {

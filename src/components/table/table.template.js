@@ -1,4 +1,8 @@
 /* eslint-disable no-plusplus */
+
+import { defaultStyles } from '../../constants';
+import camelToDashCase from '../../core/utils';
+
 /* eslint-disable no-unused-vars */
 const CODES = {
   A: 65,
@@ -22,6 +26,9 @@ function toCell(state, row) {
     const id = `${row}:${col}`;
     const width = getWidth(state.colState, col);
     const data = state.dataState[id];
+    const styles = Object.keys(defaultStyles)
+      .map((key) => `${camelToDashCase(key)}: ${defaultStyles[key]}`)
+      .join(';');
     return `
         <div 
           class="cell" 
@@ -30,7 +37,7 @@ function toCell(state, row) {
           data-row="${row}" 
           data-id="${id}" 
           data-type="cell"
-          style="width: ${width}"
+          style="${styles}; width: ${width}"
         >${data || ''}</div>`;
   };
 }

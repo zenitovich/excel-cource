@@ -65,6 +65,13 @@ class Dom {
     return this.$el.querySelectorAll(selector);
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s];
+      return res;
+    }, {});
+  }
+
   // метод кейс перебирает все ключи в объекте и создает массив
   css(styles = {}) {
     Object.keys(styles)

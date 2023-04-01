@@ -1,6 +1,7 @@
 import createToolbar from './toolbar.template';
 import $ from '../../core/dom';
 import ExcelStateComponent from '../../core/ExcelStateComponent';
+import { defaultStyles } from '../../constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Toolbar extends ExcelStateComponent {
@@ -10,18 +11,13 @@ export class Toolbar extends ExcelStateComponent {
     super($root, {
       name: 'Toolbar',
       listeners: ['click'],
+      subscribe: ['currentStyles'],
       ...options,
     });
   }
 
   prepare() {
-    const initialState = {
-      textAlign: 'left',
-      fontWeight: 'normal',
-      fontStyle: 'normal',
-      textDecoration: 'none',
-    };
-    this.initState(initialState);
+    this.initState(defaultStyles);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -35,13 +31,16 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  storeChanged(changes) {
+    this.setState(changes.currentStyles);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   onClick(event) {
     const $target = $(event.target);
     if ($target.data.type === 'button') {
       const value = JSON.parse($target.data.value);
-      const key = Object.keys(value)[0];
-      this.setState({ [key]: value[key] });
-      console.log(this.state);
+      this.$emit('toolbar:applyStyle', value);
     }
   }
 }
