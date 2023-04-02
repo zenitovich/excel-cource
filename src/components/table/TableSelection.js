@@ -18,6 +18,10 @@ export default class TableSelection {
     this.group = [];
   }
 
+  get selectedIds() {
+    return this.group.map(($el) => $el.id());
+  }
+
   // eslint-disable-next-line class-methods-use-this
   selectGroup($group = []) {
     this.clear();

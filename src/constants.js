@@ -5,3 +5,5 @@ export const defaultStyles = {
   fontStyle: 'normal',
   textDecoration: 'none',
 };
+
+export const defaultTitle = 'New Table';

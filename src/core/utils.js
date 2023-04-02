@@ -33,3 +33,23 @@ export function isEqual(a, b) {
 export default function camelToDashCase(str) {
   return str.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
 }
+
+// eslint-disable-next-line no-unused-vars
+export function toInlineStyles(styles = {}) {
+  return Object.keys(styles)
+    .map((key) => `${camelToDashCase(key)}: ${styles[key]}`)
+    .join(';');
+}
+
+export function debounce(fn, wait) {
+  let timeout;
+  // eslint-disable-next-line func-names
+  return function (...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      fn(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
