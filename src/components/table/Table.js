@@ -10,6 +10,7 @@ import $ from '../../core/dom';
 // импортирует все из файла как переменную actions чтобы можно было объеденить все исходники
 import * as actions from '../../redux/actions';
 import { defaultStyles } from '../../constants';
+import parse from '../../core/parse';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Table extends ExcelComponent {
@@ -39,9 +40,11 @@ export class Table extends ExcelComponent {
     const $cell = this.$root.find('[data-id="0:0"]');
     this.selectCell($cell);
 
-    this.$on('formula:input', (text) => {
-      this.selection.current.text(text);
-      this.updateTextInStore(text);
+    this.$on('formula:input', (value) => {
+      this.selection.current
+        .attr('data-value', value)
+        .text(parse(value));
+      this.updateTextInStore(value);
     });
 
     this.$on('formula: done', () => {

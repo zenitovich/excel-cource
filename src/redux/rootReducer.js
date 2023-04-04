@@ -8,8 +8,7 @@ function value(state, field, action) {
   return val;
 }
 
-// eslint-disable-next-line func-names, no-unused-vars
-export default function (state, action) {
+export default function rootReducer(state, action) {
   let field;
   let val;
   switch (action.type) {

@@ -1,7 +1,7 @@
 import { storage } from '../core/utils';
 import { defaultStyles, defaultTitle } from '../constants';
 
-const deafultState = {
+const defaultState = {
   title: defaultTitle,
   rowState: {},
   colState: {},
@@ -18,4 +18,4 @@ const normalize = (state) => ({
 });
 
 // eslint-disable-next-line import/prefer-default-export
-export const initialState = storage('excel-state') ? normalize(storage('excel-state')) : deafultState;
+export const initialState = storage('excel-state') ? normalize(storage('excel-state')) : defaultState;
