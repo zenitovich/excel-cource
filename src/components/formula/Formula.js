@@ -1,5 +1,5 @@
-import { ExcelComponent } from '../../core/ExcelComponent';
-import { $ } from '../../core/dom';
+import ExcelComponent from '../../core/ExcelComponent';
+import $ from '../../core/dom';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Formula extends ExcelComponent {
@@ -7,6 +7,7 @@ export class Formula extends ExcelComponent {
     super($root, {
       name: 'Formula',
       listeners: ['input', 'keydown'],
+      subscribe: ['currentText'],
       ...options,
     });
   }
@@ -25,17 +26,34 @@ export class Formula extends ExcelComponent {
     this.$formula = this.$root.find('#formula');
 
     this.$on('table:select', ($cell) => {
-      this.$formula.text($cell.text());
+      this.$formula.text($cell.data.value);
     });
 
-    this.$on('table:input', ($cell) => {
-      this.$formula.text($cell.text());
-    });
+    // this.$on('table:input', ($cell) => {
+    //   this.$formula.text($cell.text());
+    // });
+
+    // this.$subscribe((state) => {
+    //   console.log('Formula updt', state.currentText);
+    //   this.$formula.text(state.currentText);
+    // });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  storeChanged({ currentText }) {
+    this.$formula.text(currentText);
   }
 
   // eslint-disable-next-line class-methods-use-this
   onInput(event) {
-    this.$emit('formula:input', $(event.target).text());
+    const text = $(event.target).text();
+    this.$emit('formula:input', text);
+
+    // this.$dispatch({
+    //   data: {
+    //     tableTitle: text,
+    //   },
+    // });
   }
 
   // eslint-disable-next-line class-methods-use-this

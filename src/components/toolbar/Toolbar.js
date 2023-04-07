@@ -1,37 +1,47 @@
-import { ExcelComponent } from '../../core/ExcelComponent';
+import createToolbar from './toolbar.template';
+import $ from '../../core/dom';
+import ExcelStateComponent from '../../core/ExcelStateComponent';
+import { defaultStyles } from '../../constants';
 
 // eslint-disable-next-line import/prefer-default-export
-export class Toolbar extends ExcelComponent {
+export class Toolbar extends ExcelStateComponent {
   static className = 'excel__toolbar';
 
   constructor($root, options) {
     super($root, {
       name: 'Toolbar',
       listeners: ['click'],
+      subscribe: ['currentStyles'],
       ...options,
     });
   }
 
+  prepare() {
+    this.initState(defaultStyles);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  get template() {
+    return createToolbar(this.state);
+  }
+
   // eslint-disable-next-line class-methods-use-this
   toHTML() {
-    return `
-    <div class="button">
-    <span class="material-icons">format_align_left</span>
-</div><div class="button">
-    <span class="material-icons">format_align_center</span>
-</div><div class="button">
-    <span class="material-icons">format_align_right</span>
-</div><div class="button">
-    <span class="material-icons">format_bold</span>
-</div><div class="button">
-    <span class="material-icons">format_italic</span>
-</div><div class="button">
-    <span class="material-icons">format_underline</span>
-</div>`;
+    return this.template;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  storeChanged(changes) {
+    this.setState(changes.currentStyles);
+    console.log(changes.currentStyles);
   }
 
   // eslint-disable-next-line class-methods-use-this
   onClick(event) {
-    console.log(event.target);
+    const $target = $(event.target);
+    if ($target.data.type === 'button') {
+      const value = JSON.parse($target.data.value);
+      this.$emit('toolbar:applyStyle', value);
+    }
   }
 }
