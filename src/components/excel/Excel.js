@@ -4,8 +4,7 @@ import $ from '../../core/dom';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Excel {
-  constructor(selector, options) {
-    this.$el = $(selector);
+  constructor(options) {
     this.components = options.components || [];
     this.store = options.store;
     this.emitter = new Emitter();
@@ -36,8 +35,7 @@ export class Excel {
   }
 
   // render говорит нам о том, что мы что то складываем в шаблон
-  render() {
-    this.$el.append(this.getRoot());
+  init() {
     this.subscriber.subscribeComponents(this.components);
     this.components.forEach((component) => component.init());
   }
