@@ -33,6 +33,7 @@ export class Toolbar extends ExcelStateComponent {
   // eslint-disable-next-line class-methods-use-this
   storeChanged(changes) {
     this.setState(changes.currentStyles);
+    console.log(changes.currentStyles);
   }
 
   // eslint-disable-next-line class-methods-use-this

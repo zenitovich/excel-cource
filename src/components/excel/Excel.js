@@ -38,7 +38,7 @@ export class Excel {
   // render говорит нам о том, что мы что то складываем в шаблон
   render() {
     this.$el.append(this.getRoot());
-    this.subscriber.sunscribeComponents(this.components);
+    this.subscriber.subscribeComponents(this.components);
     this.components.forEach((component) => component.init());
   }
 

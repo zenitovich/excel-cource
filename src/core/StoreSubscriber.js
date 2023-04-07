@@ -8,8 +8,9 @@ export default class StoreSubscriber {
   }
 
   // eslint-disable-next-line no-unused-vars
-  sunscribeComponents(components) {
+  subscribeComponents(components) {
     this.prevState = this.store.getState();
+
     this.sub = this.store.subscribe((state) => {
       Object.keys(state).forEach((key) => {
         if (!isEqual(this.prevState[key], state[key])) {
