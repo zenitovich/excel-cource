@@ -12,7 +12,8 @@ function toHTML() {
 // excel:1232112
 function getAllKeys() {
   const keys = [];
-  for (let i = 0; i < localStorage.length; i + 1) {
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     console.log(key);
     if (!key.includes('excel')) {
@@ -25,22 +26,21 @@ function getAllKeys() {
 }
 
 export default function createRecordsTable() {
-  // getAllKeys();
-  return '<p>Вы пока не создали ни одной таблицы</p>';
-  // const keys = getAllKeys();
+  getAllKeys();
+  const keys = getAllKeys();
 
-  // if (!keys.length) {
-  //   return '<p>Вы пока не создали ни одной таблицы</p>';
-  // }
+  if (!keys.length) {
+    return '<p>Вы пока не создали ни одной таблицы</p>';
+  }
 
-  // return `
-  //   <div class="db__list-header">
-  //     <span>Название</span>
-  //     <span>Дата открытия</span>
-  //   </div>
+  return `
+    <div class="db__list-header">
+      <span>Название</span>
+      <span>Дата открытия</span>
+    </div>
 
-  //   <ul class="db__list">
-  //     ${keys.map(toHTML).join('')}
-  //   </ul>
-  // `;
+    <ul class="db__list">
+      ${keys.map(toHTML).join('')}
+    </ul>
+  `;
 }
