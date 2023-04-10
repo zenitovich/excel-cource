@@ -12,6 +12,8 @@ import { initialState } from '../redux/initialState';
 export default class ExcelPage extends Page {
   // eslint-disable-next-line class-methods-use-this
   getRoot() {
+    console.log(this.params);
+
     const store = createStore(rootReducer, initialState);
 
     const stateListener = debounce((state) => {
