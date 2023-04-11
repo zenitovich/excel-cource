@@ -1,11 +1,12 @@
 import { Emitter } from '../../core/Emitter';
 import StoreSubscriber from '../../core/StoreSubscriber';
 import $ from '../../core/dom';
+import { preventDefault } from '../../core/utils';
+import { updateDate } from '../../redux/actions';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Excel {
-  constructor(selector, options) {
-    this.$el = $(selector);
+  constructor(options) {
     this.components = options.components || [];
     this.store = options.store;
     this.emitter = new Emitter();
@@ -36,8 +37,11 @@ export class Excel {
   }
 
   // render говорит нам о том, что мы что то складываем в шаблон
-  render() {
-    this.$el.append(this.getRoot());
+  init() {
+    if (process.env.NODE_ENV === 'production') {
+      document.addEventListener('contextmenu', preventDefault);
+    }
+    this.store.dispatch(updateDate());
     this.subscriber.subscribeComponents(this.components);
     this.components.forEach((component) => component.init());
   }
@@ -45,5 +49,6 @@ export class Excel {
   destroy() {
     this.subscriber.unsubscribeFromStore();
     this.components.forEach((component) => component.destroy);
+    document.removeEventListener('contextmenu', preventDefault);
   }
 }
